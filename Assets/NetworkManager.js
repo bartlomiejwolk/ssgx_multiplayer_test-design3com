@@ -44,14 +44,14 @@ function OnGUI(){
 	if(!Network.isClient && !Network.isServer){
 	
 		// BUTTON: "Initialize Server"
-		if(GUI.Button(Rect(btnX*0.03, btnY*0.07, btnW*0.1, btnH*0.1), "Initialize Server")){
+		if(GUI.Button(Rect(btnX*0.03, btnY*0.07, btnW*0.2, btnH*0.06), "Initialize Server")){
 			Network.InitializeServer(4, serverPort, !Network.HavePublicAddress());
 			MasterServer.RegisterHost(gameName, "Networking tutorial");
 			infoLabel = "Server initialized!";
 		}
 			
 		// BUTTON: "Refresh Host List"
-		if(GUI.Button(Rect(btnX*0.03, btnY*0.08+btnH*0.1, btnW*0.1, btnH*0.1), "Refresh Host List")){
+		if(GUI.Button(Rect(btnX*0.03, btnY*0.08+btnH*0.06, btnW*0.2, btnH*0.06), "Refresh Host List")){
 			// Request Host List from Master Server
 			MasterServer.RequestHostList(gameName);
 			// Update Information Label
@@ -67,6 +67,8 @@ function OnGUI(){
 				if (GUI.Button(Rect(btnX*0.04+btnW*0.1, btnY*0.08 + btnH*0.1 + btnH*0.1*i, btnW*0.1, btnH*0.1), hostData[i].gameName)){
 					// Connect to the Server
 					Network.Connect(hostData[i]);
+					// Clear Host Data polled from Server so that after disconnect, Hosts buttons won't show again.
+					hostData = null;
 				}
 			}
 		}
