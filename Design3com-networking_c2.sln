@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{E9617E46-C8D7-A7E2-0858-A251D789101D}") = "Design3com-networking_c2", "Assembly-UnityScript-firstpass.unityproj", "{317D4F19-F376-F8C8-BFEC-512368A2AE0E}"
+EndProject
 Project("{E9617E46-C8D7-A7E2-0858-A251D789101D}") = "Design3com-networking_c2", "Assembly-UnityScript.unityproj", "{41E47AC3-BA2F-B0AF-EBF6-5D97AAC4698C}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{317D4F19-F376-F8C8-BFEC-512368A2AE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317D4F19-F376-F8C8-BFEC-512368A2AE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317D4F19-F376-F8C8-BFEC-512368A2AE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317D4F19-F376-F8C8-BFEC-512368A2AE0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41E47AC3-BA2F-B0AF-EBF6-5D97AAC4698C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41E47AC3-BA2F-B0AF-EBF6-5D97AAC4698C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41E47AC3-BA2F-B0AF-EBF6-5D97AAC4698C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -17,7 +23,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-							GlobalSection(MonoDevelopProperties) = preSolution
+															GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
