@@ -1,6 +1,8 @@
 #pragma strict
 
-// Connection settings for Server 
+// Connection settings for Server
+public var gameName:String = "Design3com";
+ 
 private var serverPort:int = 25000;
 
 // List of Game Hosts on Master Server
@@ -44,14 +46,14 @@ function OnGUI(){
 		// BUTTON: "Initialize Server"
 		if(GUI.Button(Rect(btnX*0.03, btnY*0.07, btnW*0.1, btnH*0.1), "Initialize Server")){
 			Network.InitializeServer(4, serverPort, !Network.HavePublicAddress());
-			MasterServer.RegisterHost("design3com", "Networking tutorial");
+			MasterServer.RegisterHost(gameName, "Networking tutorial");
 			infoLabel = "Server initialized!";
 		}
 			
 		// BUTTON: "Refresh Host List"
 		if(GUI.Button(Rect(btnX*0.03, btnY*0.08+btnH*0.1, btnW*0.1, btnH*0.1), "Refresh Host List")){
 			// Request Host List from Master Server
-			MasterServer.RequestHostList("design3com");
+			MasterServer.RequestHostList(gameName);
 			// Update Information Label
 			infoLabel = "Searching...";
 		}
