@@ -92,6 +92,11 @@ function OnGUI(){
 			Network.Disconnect(200);
 			Debug.Log("Disconnected");
 		}
+		
+		// BUTTON: Instantiate new local Cube
+		if (GUI.Button(Rect(btnX*0.03, btnY*0.08+btnH*0.06, btnW*0.2, btnH*0.06), "Instantiate new Cube")){
+			networkView.RPC("newCube", RPCMode.All);		
+		}
 	}
 }
 
@@ -115,5 +120,12 @@ function OnConnectedToServer(){
 //######################################## FUNCTION DEF. ########################################
 
 function spawnPlayer(){
+	// Create new instante of a Player Actor on all Clients
 	Network.Instantiate(playerPrefab, spawnObject.position, Quaternion.identity, 0);
+}
+
+// Instantiate new local Cube
+@RPC
+function newCube(){
+	Instantiate(playerPrefab, spawnObject.position, Quaternion.identity);
 }
