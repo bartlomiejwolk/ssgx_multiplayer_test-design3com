@@ -14,6 +14,13 @@ private var vertAxis : float;
 
 private var shadowOn : boolean = false;
 
+// ### GUI variables ###
+
+public var btnX:int = Screen.width;
+public var btnY:int = Screen.height;
+public var btnW:int = Screen.width;
+public var btnH:int = Screen.height; 
+
 // ##################################### UPDATE #####################################
 function Update () {
 
@@ -28,7 +35,7 @@ function Update () {
 		rigidbody.velocity = Vector3.zero;
 	}
 	
-	// Player movement control (move only own Actor)
+	// Player movement control (only when I'm the owner of the gameObject)
 	if(networkView.isMine){
 		Rush();
 		
@@ -54,6 +61,11 @@ function Update () {
 		gameObject.tag = "OnlinePlayer";
 		enabled = false;
 	}
+}
+
+//######################################## GUI ########################################
+function OnGUI(){
+	
 }
 
 // ##################################### FUNCTION DEFS #####################################
