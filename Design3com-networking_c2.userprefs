@@ -1,6 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\NetworkManager.js">
+    <Files>
+      <File FileName="Assets\Scripts\NetworkManager.js" Line="57" Column="35" />
+      <File FileName="Assets\Scripts\Move.js" Line="69" Column="65" />
+      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 1\Connect.js" Line="26" Column="13" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True" selected="True">

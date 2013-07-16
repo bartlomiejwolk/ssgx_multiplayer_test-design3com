@@ -65,7 +65,8 @@ function Update () {
 
 //######################################## GUI ########################################
 function OnGUI(){
-	
+	// LABEL: ID of the networkView owner
+	GUI.Label(Rect(Screen.width*0.55, 0, 500, 100), "ID of the Cube networkView owner: " + networkView.owner);
 }
 
 // ##################################### FUNCTION DEFS #####################################

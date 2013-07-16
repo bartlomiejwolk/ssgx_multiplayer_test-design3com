@@ -15,14 +15,11 @@ var playerPrefab:GameObject;
 // Empty object indicating position for Spawned Player
 var spawnObject:Transform;
 
-// ### GUI variables ###
 
-public var btnX:int = Screen.width;
-public var btnY:int = Screen.height;
-public var btnW:int = Screen.width;
-public var btnH:int = Screen.height; 
 // Information to display on a Label at Screen bottom
-private var infoLabel:String = "xxx";
+private var infoLabel:String = "";
+
+public var customButton:GUIStyle;
 
 //######################################## AWAKE/START/UPDATE ########################################
 
@@ -44,42 +41,48 @@ function Update(){
 //######################################## GUI ########################################
 
 function OnGUI(){
+	// LABEL: Information from Server
+	GUILayout.Label(infoLabel);
+	
 	// LABEL: Connections
-	GUILayout.Label("Connections: " + Network.connections.Length.ToString());
+	GUILayout.Label("Connections to Server: " + Network.connections.Length.ToString());
 	
 	// LABEL: Connection Status
 	GUILayout.Label("Connection Status: " + connectionStatus);
 	
-	// LABEL: Information from Server
-	GUILayout.Label(infoLabel);
+	// LABEL: ID of the networkView owner
+	GUILayout.Label("ID of the Camera networkView owner: " + networkView.owner);
 	
 	// When not Client and not Server
 	if(!Network.isClient && !Network.isServer){
 	
 		// BUTTON: "Initialize Server"
-		if(GUI.Button(Rect(btnX*0.03, btnY*0.25, btnW*0.2, btnH*0.06), "Initialize Server")){
+		if(GUILayout.Button("Initialize Server")){
 			Network.InitializeServer(4, serverPort, !Network.HavePublicAddress());
 			MasterServer.RegisterHost(gameName, "Networking tutorial");
 			infoLabel = "Server initialized!";
 		}
 			
 		// BUTTON: "Refresh Host List"
-		if(GUI.Button(Rect(btnX*0.03, btnY*0.26+btnH*0.06, btnW*0.2, btnH*0.06), "Refresh Host List")){
+		if(GUILayout.Button("Refresh Host List")){
 			// Request Host List from Master Server
 			MasterServer.RequestHostList(gameName);
 			// Update Information Label
 			infoLabel = "Searching...";
 		}
 		
-		// BUTTONS: One Button = one Host (if there are any)
+		// If there is a Server...
 		if(hostData){
 			// Update Information Label
 			infoLabel = "Hosts found!";
 			// Show buttons - one for each Host
 			for (var i:int=0; i<hostData.length; i++){
-				if (GUI.Button(Rect(btnX*0.04+btnW*0.2, btnY*0.08+btnH*0.06, btnW*0.2, btnH*0.06), hostData[i].gameName)){
+				// BUTTON: [Game Name]
+				if (GUILayout.Button(hostData[i].gameName, customButton)){
 					// Connect to the Server
 					Network.Connect(hostData[i]);
+					// Update Information Label
+					infoLabel = "Connected!";
 					// Clear Host Data polled from Server so that after disconnect, Hosts buttons won't show again.
 					hostData = null;
 				}
@@ -94,15 +97,17 @@ function OnGUI(){
 	// When connected (as Server or as Player)
 	else{
 		// BUTTON: "Disconnect"
-		if (GUI.Button(Rect(btnX*0.03, btnY*0.25, btnW*0.2, btnH*0.06), "Disconnect")){
+		if (GUILayout.Button("Disconnect")){
 			Network.Disconnect(200);
 			Debug.Log("Disconnected");
 			// Update Connection Status Label (no Client and no Server)
 			connectionStatus = "Not connected";
+			
+			infoLabel = "Disconnected!";
 		}
 		
 		// BUTTON: Instantiate new local Cube
-		if (GUI.Button(Rect(btnX*0.03, btnY*0.26+btnH*0.06, btnW*0.2, btnH*0.06), "Instantiate new Cube")){
+		if (GUILayout.Button("Instantiate new Cube")){
 			Network.Instantiate(playerPrefab, spawnObject.position, Quaternion.identity, 0);
 		}
 	}
