@@ -44,27 +44,30 @@ function OnGUI(){
 	// LABEL: Information from Server
 	GUILayout.Label(infoLabel);
 	
-	// LABEL: Connections
-	GUILayout.Label("Connections to Server: " + Network.connections.Length.ToString());
-	
 	// LABEL: Connection Status
 	GUILayout.Label("Connection Status: " + connectionStatus);
 	
 	// LABEL: ID of the networkView owner
 	GUILayout.Label("ID of the Camera networkView owner: " + networkView.owner);
 	
+	// LABEL: Show "Connecting ..." when connecting
+	if (Network.peerType == NetworkPeerType.Connecting)
+		GUILayout.Label("Connecting...");
+	
 	// When not Client and not Server
 	if(!Network.isClient && !Network.isServer){
 	
 		// BUTTON: "Initialize Server"
 		if(GUILayout.Button("Initialize Server")){
-			Network.InitializeServer(4, serverPort, !Network.HavePublicAddress());
+			Network.InitializeServer(32, serverPort, !Network.HavePublicAddress());
 			MasterServer.RegisterHost(gameName, "Networking tutorial");
 			infoLabel = "Server initialized!";
 		}
 			
 		// BUTTON: "Refresh Host List"
 		if(GUILayout.Button("Refresh Host List")){
+			// Remove Host Data since you'll be loading new data into it (see Update())
+			hostData = null;
 			// Request Host List from Master Server
 			MasterServer.RequestHostList(gameName);
 			// Update Information Label
@@ -81,8 +84,7 @@ function OnGUI(){
 				if (GUILayout.Button(hostData[i].gameName, customButton)){
 					// Connect to the Server
 					Network.Connect(hostData[i]);
-					// Update Information Label
-					infoLabel = "Connected!";
+					Debug.Log("Connected to a Server!");
 					// Clear Host Data polled from Server so that after disconnect, Hosts buttons won't show again.
 					hostData = null;
 				}
@@ -95,7 +97,26 @@ function OnGUI(){
 		}*/	
 	}
 	// When connected (as Server or as Player)
-	else{
+	else {
+		// If Client...
+		if (Network.peerType == NetworkPeerType.Client){
+		// Update Information Label
+		infoLabel = "Connected!";
+		// LABEL: Show Ping to Server
+		GUILayout.Label("Ping to Server: " + Network.GetAveragePing(Network.connections[0]) + " ms");
+		}
+		
+		// If Server and there are connected Clients...
+		if (Network.peerType == NetworkPeerType.Server){
+			if (Network.connections.length >= 1){
+				for (var j:int=1; j<=Network.connections.length; j++)
+					GUILayout.Label("Ping to Player " + j + ": " + Network.GetAveragePing(Network.connections[j-1]));
+			}
+			
+			// LABEL: Connections to Server
+			GUILayout.Label("Connections to Server: " + Network.connections.Length.ToString());
+		}
+	
 		// BUTTON: "Disconnect"
 		if (GUILayout.Button("Disconnect")){
 			Network.Disconnect(200);
@@ -103,7 +124,7 @@ function OnGUI(){
 			// Update Connection Status Label (no Client and no Server)
 			connectionStatus = "Not connected";
 			
-			infoLabel = "Disconnected!";
+			//infoLabel = "Disconnected!";
 		}
 		
 		// BUTTON: Instantiate new local Cube
@@ -133,23 +154,34 @@ function OnServerInitialized(){
 	connectionStatus = "Server";
 }
 	
-function OnFailedToConnectToMasterServer(){
-
+function OnFailedToConnectToMasterServer(info:NetworkConnectionError){
+	Debug.Log("NetworkConnectionError: " + info);
 }
 
+// Called on the server whenever a player is disconnected from the server.
 function OnPlayerDisconnected(player:NetworkPlayer){
 	// Destroy Player's Object on Disconnect (should be done only by Server)
-	if (Network.isServer){
 		infoLabel = "Player " + player + " removed!";
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
-	}
+		
+		Debug.Log("Player disconnected from: " + player.ipAddress + ":" + player.port);
 }
 
-/*function OnNetworkInstantiate(){
+// Called on client during disconnection from server, but also on the server when the connection has disconnected.
+function OnDisconnectedFromServer(info:NetworkDisconnection){
+	infoLabel = ("Reason: " + info);
+}
 
-}*/
+// ???
+function OnNetworkInstantiate(info:NetworkMessageInfo){
+	Debug.Log("New Object instantiated by: " + info.sender);
+}
 
+// ???
+function OnSerializeNetworkStream(stream:BitStream, info:NetworkMessageInfo){
+
+}
 //######################################## FUNCTION DEF. ########################################
 
 function spawnPlayer(){
