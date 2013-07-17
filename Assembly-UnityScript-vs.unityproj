@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Move.js" />
      <Compile Include="Assets\Scripts\NetworkManager.js" />
+     <Compile Include="Assets\Scripts\SpawnScript.js" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />

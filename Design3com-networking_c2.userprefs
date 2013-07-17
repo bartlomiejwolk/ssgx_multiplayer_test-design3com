@@ -2,16 +2,20 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="..\M2H_Networking_Tutorial\Assets\Tutorial 3\Tutorial_3_Spawnscript.js">
     <Files>
-      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 3\Tutorial_3_Playerscript.js" Line="1" Column="1" />
-      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 3\Tutorial_3_Spawnscript.js" Line="12" Column="37" />
-      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 1\Connect.js" Line="94" Column="1" />
+      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 3\Tutorial_3_Playerscript.js" Line="68" Column="36" />
+      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 1\Connect.js" Line="118" Column="16" />
+      <File FileName="..\M2H_Networking_Tutorial\Assets\Tutorial 3\Tutorial_3_Spawnscript.js" Line="48" Column="58" />
+      <File FileName="Assets\Scripts\SpawnScript.js" Line="4" Column="1" />
+      <File FileName="Assets\Scripts\NetworkManager.js" Line="189" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="SpawnScript.js" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
