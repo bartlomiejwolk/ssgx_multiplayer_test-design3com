@@ -1,7 +1,9 @@
-Library
+Library/*
 Temp/*
 *.csproj
 *.pidb
+*.pidb*
 *.unityproj
 *.sln
 *.userprefs
+*.usertasks
