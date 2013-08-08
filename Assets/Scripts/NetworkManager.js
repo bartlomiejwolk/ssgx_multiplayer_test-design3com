@@ -3,13 +3,12 @@
 // ### Connection settings for Server ###
 
 public var gameName:String = "Design3com";
-
 private var serverPort:int = 25000;
 // List of Game Hosts on Master Server
 private var hostData:HostData[];
 private var connectionStatus:String = "Not connected";
 
-// ### Variables for Instatiation
+// ### Variables for Instatiation ###
 
 var playerPrefab:GameObject;
 // Empty object indicating position for Spawned Player
@@ -18,7 +17,6 @@ var spawnObject:Transform;
 
 // Information to display on a Label at Screen bottom
 private var infoLabel:String = "";
-
 public var customButton:GUIStyle;
 
 //######################################## AWAKE/START/UPDATE ########################################
@@ -135,26 +133,26 @@ function OnGUI(){
 }
 		
 //######################################## MESSAGES ########################################
-function OnConnectedToServer(){
+/*function OnServerInitialized(){
+	// Spanw Player on Server side
+	spawnPlayer();
+	// Set Connection Status Label to "Server"
+	connectionStatus = "Server";
+	}*/
+	
+/*function OnConnectedToServer(){
 	// Spawn Player on Client side
 	spawnPlayer();
 	// Set Connection Status Label to "Client"
 	connectionStatus = "Client";
 		
 	// Inform all GameObjects in the Scene on Player's side that it's time to load a Level
-	/*for (var go:GameObject in FindObjectOfType(GameObject)){
-		go.SendMessage("OnNetworkLoadLevel", SendMessageOptions.DontRequireReceiver);
-	}*/	
-}
-
-function OnServerInitialized(){
-	// Spanw Player on Server side
-	spawnPlayer();
-	// Set Connection Status Label to "Server"
-	connectionStatus = "Server";
-}
+	//for (var go:GameObject in FindObjectOfType(GameObject)){
+	//	go.SendMessage("OnNetworkLoadLevel", SendMessageOptions.DontRequireReceiver);
+	//}	
+}*/
 	
-function OnFailedToConnectToMasterServer(info:NetworkConnectionError){
+/*function OnFailedToConnectToMasterServer(info:NetworkConnectionError){
 	Debug.Log("NetworkConnectionError: " + info);
 }
 
@@ -166,22 +164,22 @@ function OnPlayerDisconnected(player:NetworkPlayer){
 		Network.DestroyPlayerObjects(player);
 		
 		Debug.Log("Player disconnected from: " + player.ipAddress + ":" + player.port);
-}
+}*/
 
-// Called on client during disconnection from server, but also on the server when the connection has disconnected.
+/*// Called on client during disconnection from server, but also on the server when the connection has disconnected.
 function OnDisconnectedFromServer(info:NetworkDisconnection){
 	infoLabel = ("Reason: " + info);
-}
+}*/
 
-// ???
+/*// ???
 function OnNetworkInstantiate(info:NetworkMessageInfo){
 	Debug.Log("New Object instantiated by: " + info.sender);
-}
+}*/
 
-// ???
+/*// ???
 function OnSerializeNetworkStream(stream:BitStream, info:NetworkMessageInfo){
 
-}
+}*/
 //######################################## FUNCTION DEF. ########################################
 
 function spawnPlayer(){
