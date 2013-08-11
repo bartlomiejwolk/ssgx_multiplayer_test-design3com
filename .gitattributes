@@ -1,0 +1,4 @@
+*.meta -crlf -diff
+*.unityproj -crlf -diff
+*.sln -crlf -diff
+*.userprefs -crlf -diff
