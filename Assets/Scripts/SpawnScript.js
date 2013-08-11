@@ -23,12 +23,14 @@ function OnPlayerConnected(player : NetworkPlayer) {
 
 function OnPlayerDisconnected(player : NetworkPlayer) {
 	Debug.Log("Remove Clients Objects");
-	
+	// Destroy all objects connected to a specified ViewID
 	Network.Destroy(playerViewID);
 }
 
 // ################################ FUNCTIONS ###############################
 function SpawnPlayer(player : NetworkPlayer) {
+	// Instantiate new Player and save reference to it into 'instPlayer' (used for deriving Object's ViewID)
 	var instPlayer : Transform = Network.Instantiate(playerPrefab, transform.position, transform.rotation, 0);
+	// Save ViewID of a new instanted Player into 'playerViewID' (used for destroing Player's Objects)
 	playerViewID = instPlayer.networkView.viewID;
 }
