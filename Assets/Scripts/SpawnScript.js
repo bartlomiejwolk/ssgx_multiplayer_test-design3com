@@ -1,6 +1,8 @@
 #pragma strict
 
+// prefab that will be used for instanting Player's Object
 public var playerPrefab : Transform;
+// ViewID of a recently instanted Player's Object
 var playerViewID : NetworkViewID;
 
 // ################################ MESSAGES ##################################
@@ -33,4 +35,27 @@ function SpawnPlayer(player : NetworkPlayer) {
 	var instPlayer : Transform = Network.Instantiate(playerPrefab, transform.position, transform.rotation, 0);
 	// Save ViewID of a new instanted Player into 'playerViewID' (used for destroing Player's Objects)
 	playerViewID = instPlayer.networkView.viewID;
+	// Change Player's color
+	networkView.RPC("SetColor", RPCMode.AllBuffered, playerViewID);
+	
+}
+
+@RPC
+function SetColor (playerViewID : NetworkViewID) {
+	// Find (on all machines) NetworkView for an Object that was just instanted.
+	// Save it into 'netView' (used for getting the object itself) 
+	var netView : NetworkView = NetworkView.Find(playerViewID);
+	// Create reference to the instanted Object (used for change color)
+	var playerObj : Transform = netView.GetComponent(Transform);
+	// Change color of the instanted Object
+	playerObj.renderer.material.SetColor("_Color", Color.yellow);
+	
+	Debug.Log("viewID: " + playerViewID);
+	Debug.Log("netView: " + netView);
+	
+	
+	// Change color of the new instanted Object
+	//var thisObj : NetworkView = GetComponent(NetworkView);
+	//if (thisObj.viewID == PlayerViewID)
+		//renderer.material.SetColor("_Color", Color.yellow);
 }
