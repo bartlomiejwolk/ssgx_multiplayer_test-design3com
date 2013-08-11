@@ -4,8 +4,11 @@
 public var playerPrefab : Transform;
 // ViewID of a recently instanted Player's Object
 var playerViewID : NetworkViewID;
-//
+// Array of available colors for connected Players
+// Colors are assigned to the array from Unity's Inspector
 var cubeColor : Color[];
+// Each instanted Player Object will have its own ID numer (needed for assigning color for new Player)
+var playerID : int = 0;
 
 // ################################ MESSAGES ##################################
 function OnServerInitialized() {
@@ -38,7 +41,9 @@ function SpawnPlayer(player : NetworkPlayer) {
 	// Save ViewID of a new instanted Player into 'playerViewID' (used for destroing Player's Objects)
 	playerViewID = instPlayer.networkView.viewID;
 	// Change Player's color
-	networkView.RPC("SetColor", RPCMode.AllBuffered, playerViewID, Vector3(cubeColor[1].r, cubeColor[1].g, cubeColor[1].b));
+	networkView.RPC("SetColor", RPCMode.AllBuffered, playerViewID, Vector3(cubeColor[playerID].r, cubeColor[playerID].g, cubeColor[playerID].b));
+	// Increase Player's Object ID that will be assigned for the next instanted Player Object.
+	playerID += 1;
 	
 }
 
