@@ -14,7 +14,7 @@ private var vertAxis : float;
 
 private var shadowOn : boolean = false;
 
-// 
+// This holds information about owner of this script. Used deciding if client can run this particulary instance of the script.
 public var owner : NetworkPlayer;
 
 // ### GUI variables ###
