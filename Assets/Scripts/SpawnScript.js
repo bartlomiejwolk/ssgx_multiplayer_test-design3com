@@ -9,6 +9,8 @@ var playerViewID : NetworkViewID;
 var cubeColor : Color[];
 // Each instanted Player Object will have its own ID numer (needed for assigning color for new Player)
 var playerID : int = 0;
+// Array that contains pointers to scripts 'PlayerScript.js' which every Player Object has
+var playerScripts : ArrayList = new ArrayList();
 
 // ################################ MESSAGES ##################################
 function OnServerInitialized() {
@@ -30,8 +32,17 @@ function OnPlayerConnected(player : NetworkPlayer) {
 
 function OnPlayerDisconnected(player : NetworkPlayer) {
 	Debug.Log("Remove Clients Objects");
-	// Destroy all objects connected to a specified ViewID
-	Network.Destroy(playerViewID);
+	// For each Player in 'playerScripts' ...
+	for(var script : PlayerScript in playerScripts) {
+		// ... check if the owner of the script is the Player who just disconnected
+		if (player == script.owner) {
+			// Destroy Game Object to which the script belongs to
+			Network.Destroy(script.gameObject);
+			// Remove Player from 'playerScripts' array
+			playerScripts.Remove(script);
+			break;
+		}
+	}
 }
 
 // ################################ FUNCTIONS ###############################
@@ -44,6 +55,17 @@ function SpawnPlayer(player : NetworkPlayer) {
 	networkView.RPC("SetColor", RPCMode.AllBuffered, playerViewID, Vector3(cubeColor[playerID].r, cubeColor[playerID].g, cubeColor[playerID].b));
 	// Increase Player's Object ID that will be assigned for the next instanted Player Object.
 	playerID += 1;
+	// Add reference to 'PlayerScript' Script component to the 'playerScripts' array
+	playerScripts.Add(instPlayer.GetComponent(PlayerScript));
+	// Create reference to the NetworkView of the newly created Player
+	var newObjNetworkView : NetworkView = instPlayer.networkView;
+	// Set 'owner' variable in the "PlayerScript" script. Using 'newObjNetworkView' allows separate RPC call and it's definition ('PlayerScript' script).
+	newObjNetworkView.RPC("setPlayer", RPCMode.AllBuffered, player);
+	
+	// List values of 'PlayerScript.js -> owner' variable for debuging purposes
+	for (var script : PlayerScript in playerScripts) {
+		Debug.Log("[variable] PlayerScript.owner: " + script.owner);
+	}
 	
 }
 

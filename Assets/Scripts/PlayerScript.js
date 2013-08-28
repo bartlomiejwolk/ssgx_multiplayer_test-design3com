@@ -14,6 +14,9 @@ private var vertAxis : float;
 
 private var shadowOn : boolean = false;
 
+// 
+public var owner : NetworkPlayer;
+
 // ### GUI variables ###
 
 public var btnX:int = Screen.width;
@@ -81,5 +84,13 @@ function Rush (){
 				shadowOn = false;
 			}
 		Energy -= Time.deltaTime;
+	}
+}
+
+@RPC
+function setPlayer (player : NetworkPlayer){
+	owner = player;
+	if (player == Network.player) {
+		enabled = true;
 	}
 }
