@@ -24,6 +24,12 @@ public var btnY:int = Screen.height;
 public var btnW:int = Screen.width;
 public var btnH:int = Screen.height; 
 
+function Awake() {
+	// Disable rendering for Server
+	if(Network.isServer)
+		renderer.enabled=false;
+}
+
 // ##################################### UPDATE #####################################
 function Update () {
 

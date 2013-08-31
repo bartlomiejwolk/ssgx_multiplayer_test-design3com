@@ -15,7 +15,7 @@ var playerScripts : ArrayList = new ArrayList();
 // ################################ MESSAGES ##################################
 function OnServerInitialized() {
 
-	SpawnPlayer(Network.player);
+	//SpawnPlayer(Network.player);
 }
 
 // Called also on the Server side when disconnected 
