@@ -51,10 +51,12 @@ function SpawnPlayer(player : NetworkPlayer) {
 	var instPlayer : Transform = Network.Instantiate(playerPrefab, transform.position, transform.rotation, 0);
 	// Save ViewID of a new instanted Player into 'playerViewID' (used for destroing Player's Objects)
 	playerViewID = instPlayer.networkView.viewID;
+	
 	// Change Player's color
 	networkView.RPC("SetColor", RPCMode.AllBuffered, playerViewID, Vector3(cubeColor[playerID].r, cubeColor[playerID].g, cubeColor[playerID].b));
-	// Increase Player's Object ID that will be assigned for the next instanted Player Object.
+	// Increase Player's Object ID that will be assigned for the next instanted Player Object (used for color only).
 	playerID += 1;
+	
 	// Add reference to 'PlayerScript' Script component to the 'playerScripts' array
 	playerScripts.Add(instPlayer.GetComponent(PlayerScript));
 	// Create reference to the NetworkView of the newly created Player
@@ -66,6 +68,8 @@ function SpawnPlayer(player : NetworkPlayer) {
 	for (var script : PlayerScript in playerScripts) {
 		Debug.Log("[variable] PlayerScript.owner: " + script.owner);
 	}
+	
+	Debug.Log("NetworkView owner: " + playerViewID);
 	
 }
 
