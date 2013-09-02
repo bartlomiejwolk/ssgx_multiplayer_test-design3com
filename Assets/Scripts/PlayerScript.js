@@ -4,6 +4,7 @@ var speedShadow : GameObject;
 var forcePower : float = 8000;
 private var Charge : float;
 private var Energy : float = 0.6;
+public var speed : float = 100;
 
 //
 public var playerLerp : float = 0.1;
@@ -63,20 +64,19 @@ function Update () {
 	
 	if (Network.isServer) {
 		var moveDirection : Vector3 = new Vector3(serverCurrentHInput, 0, serverCurrentVInput);
-		var speed : float = 10;
 		transform.Translate(speed * moveDirection * Time.deltaTime);
 		
 	}
-
-}
-/*
+	
 	// Add respawn cabability
 	if (Input.GetKeyDown("r")){
 		transform.rotation = Quaternion.identity;
 		transform.position = Vector3(2, 8, 9);
 		rigidbody.velocity = Vector3.zero;
 	}
-	
+
+}
+/*	
 	// Player movement control (only when I'm the owner of the gameObject)
 	if(networkView.isMine){
 		Rush();
@@ -144,10 +144,12 @@ function sendMovementInput(HInput : float, VInput : float) {
 }
 
 function OnSerializeNetworkView(stream : BitStream, info : NetworkMessageInfo) {
+	// Server side
 	if (stream.isWriting) {
 		var pos : Vector3 = transform.position;
 		stream.Serialize(pos);
 	}
+	// Client side
 	else {
 		var posReceived : Vector3 = Vector3.zero;
 		stream.Serialize(posReceived);
