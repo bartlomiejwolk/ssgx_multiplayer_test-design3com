@@ -5,6 +5,9 @@ var forcePower : float = 8000;
 private var Charge : float;
 private var Energy : float = 0.6;
 
+//
+public var playerLerp : float = 0.1;
+
 // Used for Rush()
 /*
 private var MoveDirection : Vector3;
@@ -126,6 +129,7 @@ function Rush (){
 */
 
 @RPC
+// Server uses this to set properly the 'owner' variable on a just connected Client
 function setPlayer (player : NetworkPlayer){
 	owner = player;
 	if (player == Network.player) {
@@ -148,7 +152,7 @@ function OnSerializeNetworkView(stream : BitStream, info : NetworkMessageInfo) {
 		var posReceived : Vector3 = Vector3.zero;
 		stream.Serialize(posReceived);
 		
-		transform.position = Vector3.Lerp(transform.position, posReceived, 0.9);
+		transform.position = Vector3.Lerp(transform.position, posReceived, playerLerp);
 	}
 	
 }
